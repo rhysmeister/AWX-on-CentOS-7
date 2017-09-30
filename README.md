@@ -15,14 +15,18 @@ Getting started
 
 1. From a shell
 
-	ansible-galaxy install  geerlingguy.repo-epel
-	git clone https://github.com/rhysmeister/AWX-on-CentOS-7
-	cd AWX-on-CentOS-7
-	vagrant up
+```
+ansible-galaxy install  geerlingguy.repo-epel
+git clone https://github.com/rhysmeister/AWX-on-CentOS-7
+cd AWX-on-CentOS-7
+vagrant up
+```
 
 2. Access url http://http://192.168.4.111/
 
 3.  Login with;
 
-	u: admin
-	p: password
+```
+u: admin
+p: password
+```
