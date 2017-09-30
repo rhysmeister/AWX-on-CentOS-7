@@ -1,0 +1,60 @@
+---
+  - hosts: all
+    gather_facts: yes
+    become: yes
+    vars:
+      installation_packages: [
+        "git",
+        "gettext",
+        "ansible",
+        "docker",
+        "nodejs",
+        "npm",
+        "gcc-c++",
+        "bzip2",
+        "python-docker-py"
+      ]
+      git_url_awx: "https://github.com/ansible/awx.git"
+
+    # Install role with...
+    # ansible-galaxy install  geerlingguy.repo-epel
+    roles:
+      - geerlingguy.repo-epel
+
+    tasks:
+
+      - name: Stop and disable firewalld.
+        service:
+          name: firewalld
+          state: stopped
+          enabled: False
+
+      - name: Disable selinux
+        selinux:
+          state: disabled
+
+      - name: Install required packages
+        yum:
+          name: "{{ installation_packages }}"
+          state: latest
+          enablerepo: cr
+
+      - name: Start and enable docker service
+        service:
+          name: docker
+          state: started
+          enabled: yes
+
+      - name: Checkout from AWX git
+        git:
+          repo: "{{git_url_awx }}"
+          dest: /home/vagrant/awx
+        become: no
+
+      - name: Run ansible playbook for awx setup
+        command: ansible-playbook -i inventory install.yml
+        args:
+          chdir: /home/vagrant/awx/installer/
+
+      - debug:
+          msg: "Process will take about ten minutes to complete. You can check the following url for progress http://192.168.4.111 Login with u: admin p: password when ready."
