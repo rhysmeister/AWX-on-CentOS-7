@@ -16,7 +16,7 @@ Getting started
 1. From a shell
 
 ```
-ansible-galaxy install  geerlingguy.repo-epel
+ansible-galaxy install geerlingguy.repo-epel
 git clone https://github.com/rhysmeister/AWX-on-CentOS-7
 cd AWX-on-CentOS-7
 vagrant up
