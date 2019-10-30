@@ -1,6 +1,6 @@
 ---
-sudo: required
 language: python
+sudo: required
 services:
   - virtualbox
 before_install:
